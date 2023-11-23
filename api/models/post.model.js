@@ -25,8 +25,15 @@ const postSchema = new Schema(
     //   },
     // ],
   },
+  { toJSON: { virtuals: true }, toObject: { virtuals: true } },
   { timestamps: true }
 );
+
+// postSchema.virtual('comments', {
+//   ref: 'Comment',
+//   foreignField: 'post',
+//   localField: 'id',
+// });
 
 const Post = mongoose.model('Post', postSchema);
 

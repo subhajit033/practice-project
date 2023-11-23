@@ -5,6 +5,7 @@ const globalErrorHandler = (err, req, res, next) => {
     status,
     message: err.message,
     err,
+    stack: err.stack
   });
 };
 

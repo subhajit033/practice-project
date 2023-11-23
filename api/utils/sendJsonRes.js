@@ -6,9 +6,9 @@ const sendJsonRes = (res, statusCode, data, options) => {
     },
   };
   if (options) {
-    jsonObj = { ...jsonObj, ...options };
+    jsonObj = { ...options, ...jsonObj };
   }
-  res.status(statusCode).json(sendJsonRes);
+  res.status(statusCode).json(jsonObj);
 };
 
 export default sendJsonRes;

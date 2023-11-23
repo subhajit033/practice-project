@@ -95,6 +95,7 @@ const protect = async (req, res, next) => {
     } else if (req.cookies.jwt) {
       token = req.cookies.jwt;
     }
+
     if (!token) {
       return next(
         new APPError('You are not logged in, please login to app first', 401)
@@ -125,6 +126,7 @@ const protect = async (req, res, next) => {
     //passing the user property to next middleware
     req.user = currentUser;
   } catch (err) {
+    // console.log(err);
     return next(new APPError(err.message, 400));
   }
   //grant access to protected routes

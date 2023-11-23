@@ -68,6 +68,7 @@ userSchema.methods.changedPasswordAfter = function (JWTtimestamps) {
   }
   return false;
 };
+
 const User = mongoose.model('User', userSchema);
 
 export default User;

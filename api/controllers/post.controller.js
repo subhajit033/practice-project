@@ -1,9 +1,12 @@
-import APPError from '../utils/appError';
+import APPError from '../utils/appError.js';
 import Post from '../models/post.model.js';
-import sendJsonRes from '../utils/sendJsonRes';
+import sendJsonRes from '../utils/sendJsonRes.js';
 const getPosts = async (req, res, next) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().populate({
+      path: 'user',
+      select: 'userName avatar'
+    });
     sendJsonRes(res, 200, posts, { length: posts.length });
   } catch (err) {
     next(new APPError(err.message, 400));
@@ -21,4 +24,8 @@ const createPost = async (req, res, next) => {
   }
 };
 
-export {getPosts, createPost};
+const updatePost = (req, res, next) => {
+  
+};
+
+export { getPosts, createPost };
