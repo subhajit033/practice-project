@@ -3,10 +3,20 @@ import Post from '../models/post.model.js';
 import sendJsonRes from '../utils/sendJsonRes.js';
 const getPosts = async (req, res, next) => {
   try {
-    const posts = await Post.find().populate({
-      path: 'user',
-      select: 'userName avatar'
-    });
+    const posts = await Post.find()
+      .populate({
+        path: 'user',
+        select: 'userName avatar',
+      })
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'commentator',
+          select: 'userName avatar',
+        },
+        // select: ''
+      })
+      .sort('createdAt');
     sendJsonRes(res, 200, posts, { length: posts.length });
   } catch (err) {
     next(new APPError(err.message, 400));
@@ -24,8 +34,6 @@ const createPost = async (req, res, next) => {
   }
 };
 
-const updatePost = (req, res, next) => {
-  
-};
+const updatePost = (req, res, next) => {};
 
 export { getPosts, createPost };

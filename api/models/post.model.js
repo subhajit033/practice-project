@@ -29,11 +29,11 @@ const postSchema = new Schema(
   { timestamps: true }
 );
 
-// postSchema.virtual('comments', {
-//   ref: 'Comment',
-//   foreignField: 'post',
-//   localField: 'id',
-// });
+postSchema.virtual('comments', {
+  ref: 'Comment',
+  foreignField: 'post',
+  localField: '_id',
+});
 
 const Post = mongoose.model('Post', postSchema);
 

@@ -2,6 +2,7 @@ import APPError from '../utils/appError.js';
 import Comment from '../models/comment.model.js';
 import sendJsonRes from '../utils/sendJsonRes.js';
 const craeteComment = async (req, res, next) => {
+  console.log(req.params);
   req.body.post = req.params.postId;
   req.body.commentator = req.user.id;
   try {
