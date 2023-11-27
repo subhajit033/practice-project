@@ -27,7 +27,12 @@ const unfollowUser = async (req, res, next) => {
 
 const getFollowings = async (req, res, next) => {
   try {
-    const followings = await Following.find({ user: req.params.userId });
+    const followings = await Following.find({
+      user: req.params.userId,
+    }).populate({
+      path: 'following',
+      select: 'userName avatar',
+    });
     sendJsonRes(res, 200, followings, { length: followings.length });
   } catch (err) {
     next(new APPError(err.message, 400));
