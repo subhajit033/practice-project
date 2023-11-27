@@ -3,8 +3,9 @@ import mongoose from 'mongoose';
 dotenv.config({ path: './config.env' });
 import app from './api/app.js';
 
+console.log(process.env.DB);
 const DB = process.env.DB;
-
+console.log(DB);
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -14,6 +15,6 @@ mongoose
   .catch((err) => console.log('DB connection failed .. ' + err));
 
 const port = process.env.PORT;
-app.listen(port, ()=>{
-    console.log(`Server started on port ${port}`);
-})
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});

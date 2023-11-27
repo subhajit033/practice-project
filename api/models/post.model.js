@@ -18,15 +18,13 @@ const postSchema = new Schema(
     description: {
       type: String,
     },
-    // comments: [
-    //   {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: 'Comment',
-    //   },
-    // ],
+    createdAt:{
+      type: Date,
+      default: Date.now()
+    }
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } },
-  { timestamps: true }
+  
 );
 
 postSchema.virtual('comments', {
