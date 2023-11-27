@@ -21,7 +21,6 @@ const uploadOnclould = async (fileName) => {
     unlinkSync(fileName);
     return res.url;
   } catch (err) {
-    
     return null;
   }
 };

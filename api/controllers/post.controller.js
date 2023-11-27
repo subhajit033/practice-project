@@ -75,6 +75,36 @@ const uploadToClould = async (req, res, next) => {
   next();
 };
 
-const updatePost = (req, res, next) => {};
+const updatePost = async (req, res, next) => {
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.postId,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    sendJsonRes(res, 200, updatedPost);
+  } catch (err) {
+    next(new APPError(err.message, 400));
+  }
+};
 
-export { getPosts, createPost, uploadPost, uploadToClould };
+const deletePost = async (req, res, next) => {
+  try {
+    const deletedPost = await Post.findOneAndDelete(req.params.postId);
+    sendJsonRes(res, 204, null);
+  } catch (err) {
+    next(new APPError(err.message, 400));
+  }
+};
+
+export {
+  getPosts,
+  createPost,
+  uploadPost,
+  uploadToClould,
+  updatePost,
+  deletePost,
+};

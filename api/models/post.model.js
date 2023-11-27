@@ -18,13 +18,12 @@ const postSchema = new Schema(
     description: {
       type: String,
     },
-    createdAt:{
+    createdAt: {
       type: Date,
-      default: Date.now()
-    }
+      default: Date.now(),
+    },
   },
-  { toJSON: { virtuals: true }, toObject: { virtuals: true } },
-  
+  { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 postSchema.virtual('comments', {
