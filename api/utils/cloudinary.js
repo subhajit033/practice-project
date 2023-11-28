@@ -13,7 +13,7 @@ cloudinary.config({
 
 const uploadOnclould = async (fileName) => {
   if (!fileName) return null;
-  console.log('filename ' + fileName);
+  
   try {
     const res = await cloudinary.uploader.upload(fileName, {
       resource_type: 'auto',
@@ -21,6 +21,7 @@ const uploadOnclould = async (fileName) => {
     unlinkSync(fileName);
     return res.url;
   } catch (err) {
+    unlinkSync(fileName);
     return null;
   }
 };

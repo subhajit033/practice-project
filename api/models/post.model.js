@@ -28,6 +28,7 @@ const postSchema = new Schema(
 
 postSchema.virtual('comments', {
   ref: 'Comment',
+  //give the comment of that particular post
   foreignField: 'post',
   localField: '_id',
 });

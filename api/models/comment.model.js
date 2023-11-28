@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
+//as a post can have multiple comment and this array can go larger and larger, so its a better way to parent referencing
 const commentSchema = new Schema(
   {
     message: {
@@ -19,6 +20,8 @@ const commentSchema = new Schema(
   },
   { timestamps: true }
 );
+
+
 
 const Comment = mongoose.model('Comment', commentSchema);
 

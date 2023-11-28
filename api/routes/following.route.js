@@ -3,7 +3,7 @@ import { protect } from '../controllers/auth.controller.js';
 import {
   createFollowings,
   unfollowUser,
-  getFollowings
+  getFollowings,
 } from '../controllers/following.controller.js';
 
 const router = express.Router();
