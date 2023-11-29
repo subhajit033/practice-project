@@ -3,7 +3,13 @@ import bcrypt from 'bcryptjs';
 import User from '../models/user.model.js';
 import APPError from '../utils/appError.js';
 import { promisify } from 'util';
-import { catchAsync } from '../utils/catchAsync.js';
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { uploadOnclould } from '../utils/cloudinary.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const signToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
@@ -36,6 +42,44 @@ const createAndSendToken = (user, statusCode, res) => {
     },
   });
 };
+
+//multer config
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // console.log(path.join(__dirname, '..', 'public', 'temp'));
+    cb(null, `${path.join(__dirname, '..', 'public', 'temp')}`);
+  },
+  filename: (req, file, cb) => {
+    // console.log(file);
+    //file = req.file
+    const ext = file.mimetype.split('/')[1];
+    req.filename = `user-${Date.now()}.${ext}`;
+    cb(null, req.filename);
+  },
+});
+
+const upload = multer({
+  storage: multerStorage,
+});
+
+const uploadAvatar = upload.single('avatar_photo');
+
+const uploadUserPhoto = async (req, res, next) => {
+  if (!req.file) return next();
+  try {
+    const url = await uploadOnclould(
+      path.join(__dirname, '..', 'public', 'temp', req.filename),
+      true
+    );
+    if (!url) return next('Error while uploading', 400);
+    req.body.avatar = url;
+  } catch (error) {
+    return next(error.message, 400);
+  }
+  next();
+};
+
 const signup = async (req, res, next) => {
   try {
     //in here anyone can be defined as admin , so we don't want to save the role of user in database
@@ -314,4 +358,6 @@ export {
   updatePassword,
   isLoggedIn,
   logOut,
+  uploadAvatar,
+  uploadUserPhoto,
 };

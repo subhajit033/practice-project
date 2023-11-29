@@ -5,6 +5,9 @@ import {
   updateComment,
   deleteComment,
 } from '../controllers/comment.controller.js';
+
+//it is a nested route. to get the params postId from postroute  mergeParams: true is done
+
 const router = express.Router({ mergeParams: true });
 
 router.use(protect);

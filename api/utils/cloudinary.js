@@ -11,13 +11,24 @@ cloudinary.config({
   api_secret: 'SjrNQHDdGVmvHR8-AyZbruDimAg',
 });
 
-const uploadOnclould = async (fileName) => {
+const uploadOnclould = async (fileName, avatarImage) => {
   if (!fileName) return null;
-  
+  let url = null;
   try {
     const res = await cloudinary.uploader.upload(fileName, {
       resource_type: 'auto',
     });
+
+    //resize the image if it is avatar image
+    if (avatarImage) {
+      url = await cloudinary.url(res.public_id, {
+        width: 500,
+        height: 500,
+        crop: 'fill',
+      });
+      unlinkSync(fileName);
+      return url;
+    }
     unlinkSync(fileName);
     return res.url;
   } catch (err) {
